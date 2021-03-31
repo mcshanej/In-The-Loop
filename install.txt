@@ -1,0 +1,10 @@
+pip install --upgrade google-auth-oauthlib
+
+pip install --upgrade google-cloud-storage
+
+set GOOGLE_APPLICATION_CREDENTIALS=  [INSERT PATH TO JSON FILE]
+	-DO THIS EVERY TIME YOU START A SESSION
+
+
+pip install --upgrade google-cloud-vision
+
