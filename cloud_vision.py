@@ -12,7 +12,9 @@ from google.cloud import vision
 client = vision.ImageAnnotatorClient()
 
 # The name of the image file to annotate - UPDATE PATH FOR THE FILE YOU ARE SUBMITTING
-file_name = os.path.abspath('C:\\Users\\mcsha\\Desktop\\JTC\\In-The-Loop\\In-The-Loop\\test.jpg')
+# file_name = os.path.abspath('images/cat.jpg')
+# file_name = os.path.abspath('images/cat2.jpg')
+file_name = os.path.abspath('images/therock.jpg')
 
 # Loads the image into memory
 with io.open(file_name, 'rb') as image_file:
