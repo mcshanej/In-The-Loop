@@ -4,8 +4,8 @@ import './DisplayInfo.css';
 
 export default function DisplayInfo(){
     return(
-        <div className="wrapper">
-            <div className='displayContent'>hello</div>
+        <div className="">
+            <div className='displayContent'>This is where the description will be displayed.</div>
         </div>
     )
 }
