@@ -1,16 +1,18 @@
-#Modified from https://docs.aws.amazon.com/rekognition/latest/dg/labels-detect-labels-image.html to be used in a lambda fun tion and format returns differently.
+#Modified from https://docs.aws.amazon.com/rekognition/latest/dg/labels-detect-labels-image.html to format returns differently.
 import json
 import boto3
 
+#Allows user to select an image from a predetermined set
 photo = input('Please choose an image from the local folder labeled "Images": ')
 
+#Function for label recognition in image
 def detect_labels(photo, bucket):
-
+#Defines which AWS service to access
     client=boto3.client('rekognition')
-
+#Set parameters for the response from rekognition - Where to find the uploaded version of the image (our s3 bucket), image to be analyzed, max of 5 labels, only over 80% confidence
     response = client.detect_labels(Image={'S3Object':{'Bucket':bucket,'Name':photo}},
         MaxLabels=5, MinConfidence=80)
-
+#Accesses the correct entries in the response (nested dictionary/list) from aws rekognition. print (f'Confidence: {confidence:.2f}%.') is formatting the response to print the confidence as a percentage to the second decimal place
     print('Detected labels for ' + photo) 
     print()   
     for label in response['Labels']:
@@ -19,13 +21,14 @@ def detect_labels(photo, bucket):
         print (f'Confidence: {confidence:.2f}%.')
 
     return len(response['Labels'])
-    
+
+# Modified from https://docs.aws.amazon.com/rekognition/latest/dg/faces-detect-images.html to format response differently and provide a different set of information and the original template
 def detect_faces(photo, bucket):
-
+#Defines which AWS service to access
     client=boto3.client('rekognition')
-
+#Set parameters for the response from rekognition - Where to find the uploaded version of the image (our s3 bucket), image to be analyzed, which information to return (all)
     response = client.detect_faces(Image={'S3Object':{'Bucket':bucket,'Name':photo}},Attributes=['ALL'])
-
+#Accesses the correct entries in the response (nested dictionary/list) from aws rekognition. Printing age range (high and low to provide range), gender, and emotions with over 50% confidence.
     print('Detected faces for ' + photo)    
     for faceDetail in response['FaceDetails']:
         print('The detected face is between ' + str(faceDetail['AgeRange']['Low']) 
@@ -36,11 +39,6 @@ def detect_faces(photo, bucket):
             if int(emotion['Confidence']) >= 50:
                 print('The person is likely ' + emotion['Type'] +'.')
             return len(response['FaceDetails'])
-
+#calls functions for detecting labels and faces using image name provided by the user and hard-coded pointer to our S3 bucket
 detect_labels(photo, 'intheloop')
 detect_faces(photo, 'intheloop')
-
-#def lambda_handler(event, context):
-#    print("event", event)
-#    detect_labels(event['Records'][0]['s3']['object']['key'], 'intheloop')
-#    detect_faces(event['Records'][0]['s3']['object']['key'], 'intheloop')
