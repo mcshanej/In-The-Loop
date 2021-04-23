@@ -2,6 +2,8 @@
 import json
 import boto3
 
+photo = input('Please choose an image from the local folder labeled "Images": ')
+
 def detect_labels(photo, bucket):
 
     client=boto3.client('rekognition')
@@ -35,8 +37,10 @@ def detect_faces(photo, bucket):
                 print('The person is likely ' + emotion['Type'] +'.')
             return len(response['FaceDetails'])
 
+detect_labels(photo, 'intheloop')
+detect_faces(photo, 'intheloop')
 
-def lambda_handler(event, context):
-    print("event", event)
-    detect_labels(event['Records'][0]['s3']['object']['key'], 'intheloop')
-    detect_faces(event['Records'][0]['s3']['object']['key'], 'intheloop')
+#def lambda_handler(event, context):
+#    print("event", event)
+#    detect_labels(event['Records'][0]['s3']['object']['key'], 'intheloop')
+#    detect_faces(event['Records'][0]['s3']['object']['key'], 'intheloop')
