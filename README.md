@@ -13,10 +13,8 @@ The response from the rekognition API is parsed and select pieces of data are re
 boto3  
 json
 
-2) Install the AWS Command Line Interface from:  
+2) Using default settings install the AWS Command Line Interface from:  
 https://aws.amazon.com/cli/
-
-Use default installation.
 
 3) From your command line configure the AWS CLI:  
 $ aws configure
