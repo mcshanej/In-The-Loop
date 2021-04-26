@@ -9,6 +9,24 @@ The response from the rekognition API is parsed and select pieces of data are re
 
 ### Setting up your local system
 
+1) Install the following libraries:
+boto3
+json
+
+2) Install the AWS Command Line Interface from:
+https://aws.amazon.com/cli/
+
+Use default installation.
+
+3) From your command line configure the AWS CLI:
+$ aws configure
+
+4) Enter your access key and secret access key (provided to you separately). Set the following:
+Default region:  us-west-2
+Default output:   json
+
+5) Run aws_rekognition.py from your command line.
+
 
 
 
