@@ -2,9 +2,6 @@
 import json
 import boto3
 
-#Allows user to select an image from a predetermined set
-photo = input('Please choose an image from the local folder labeled "Images": ')
-
 #Function for label recognition in image
 def detect_labels(photo, bucket):
 #Defines which AWS service to access
@@ -39,6 +36,16 @@ def detect_faces(photo, bucket):
             if int(emotion['Confidence']) >= 50:
                 print('The person is likely ' + emotion['Type'] +'.')
             return len(response['FaceDetails'])
+
+#Allows user to select an image from a predetermined set. Will prompt for a correct choice if input is not from list of strings)
+while True:
+    photo = input('Please choose an image from the list: atom.png \ncat.jpg \ncat2.jpg \nCoronavirus-CDC-768x432.jpg \ndog.jpg \ngalaxy.jpg \nperson_dog.jpg \nrhianna.jpg \ntherock.jpg:\n')
+    if photo not in ('\natom.png', 'cat.jpg', 'cat2.jpg', 'Coronavirus-CDC-768x432.jpg', 'dog.jpg', 'galaxy.jpg', 'person_dog.jpg', 'rhianna.jpg', 'therock.jpg'):
+        print('\nNot an appropriate choice. Please select from the list again.\n')
+    else:
+        break
+
+
 #calls functions for detecting labels and faces using image name provided by the user and hard-coded pointer to our S3 bucket
 detect_labels(photo, 'intheloop')
 detect_faces(photo, 'intheloop')
