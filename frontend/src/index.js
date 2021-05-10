@@ -9,6 +9,7 @@ AWS.config.update({
   secretAccessKey: "guIZR1zWU6c5qJNu/7W6wWwY5QzvM0TR7c318WIX"
 }); 
 
+//this seems to work. else statement prints on console.
 AWS.config.getCredentials(function(err) {
   if (err) console.log(err.stack);
   // credentials not loaded
