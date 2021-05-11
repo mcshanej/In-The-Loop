@@ -1,5 +1,0 @@
-pip install --upgrade google-auth-oauthlib
-
-pip install --upgrade google-cloud-storage
-
-pip install --upgrade google-cloud-vision
