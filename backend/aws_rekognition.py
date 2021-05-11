@@ -2,8 +2,12 @@
 import json
 import boto3
 
+data = {"labels": [],
+        "people": []
+    }
 #Function for label recognition in image
 def detect_labels(photo, bucket):
+
 #Defines which AWS service to access
     client=boto3.client('rekognition')
 #Set parameters for the response from rekognition - Where to find the uploaded version of the image (our s3 bucket), image to be analyzed, max of 5 labels, only over 80% confidence
@@ -13,10 +17,13 @@ def detect_labels(photo, bucket):
     print('Detected labels for ' + photo) 
     print()   
     for label in response['Labels']:
-        confidence = label['Confidence']
-        print ("Label: " + label['Name'])
-        print (f'Confidence: {confidence:.2f}%.')
-
+        obj = {}        
+        obj['confidence'] = label['Confidence']
+        obj['name'] = label['Name']
+        data['labels'].append(obj)
+        #print ("Label: " + label['Name'])
+        #print (f'Confidence: {confidence:.2f}%.')
+    print(data)
     return len(response['Labels'])
 
 # Modified from https://docs.aws.amazon.com/rekognition/latest/dg/faces-detect-images.html to format response differently and provide a different set of information and the original template
@@ -28,10 +35,17 @@ def detect_faces(photo, bucket):
 #Accesses the correct entries in the response (nested dictionary/list) from aws rekognition. Printing age range (high and low to provide range), gender, and emotions with over 50% confidence.
     print('Detected faces for ' + photo)    
     for faceDetail in response['FaceDetails']:
-        print('The detected face is between ' + str(faceDetail['AgeRange']['Low']) 
-              + ' and ' + str(faceDetail['AgeRange']['High']) + ' years old, likely ' + str(faceDetail['Gender']['Value']) + '.')
-        print('Here are the other attributes:')
+        pobj = {}
+        pobj['agemin'] = faceDetail['AgeRange']['Low']
+        pobj['agemax'] = faceDetail['AgeRange']['High']
+        pobj['Gender'] = faceDetail['Gender']['Value']
+        data['people'].append(pobj)
+        print(pobj)
+        #print('The detected face is between ' + str(faceDetail['AgeRange']['Low']) 
+              #+ ' and ' + str(faceDetail['AgeRange']['High']) + ' years old, likely ' + str(faceDetail['Gender']['Value']) + '.')
+        #print('Here are the other attributes:')
         #referenced faceDetail before brackets and made sure to parse any number as an integer
+        
         for emotion in faceDetail['Emotions']:
             if int(emotion['Confidence']) >= 50:
                 print('The person is likely ' + emotion['Type'] +'.')
