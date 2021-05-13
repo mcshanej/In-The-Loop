@@ -1,6 +1,10 @@
 import json
 import boto3
 
+def format_json(data):
+  json_data = json.dumps(data)
+  return json_data
+
 def detect_labels(photo, bucket):
     client=boto3.client('rekognition')
     response = client.detect_labels(Image={'S3Object':{'Bucket':bucket,'Name':photo}},
@@ -11,8 +15,7 @@ def detect_labels(photo, bucket):
         obj['confidence'] = label['Confidence']
         obj['name'] = label['Name']
         data['labels'].append(obj)
-    #print(data)
-    return len(response['Labels'])
+
 
 def detect_faces(photo, bucket):
     client=boto3.client('rekognition')
@@ -23,9 +26,14 @@ def detect_faces(photo, bucket):
         pobj['agemin'] = faceDetail['AgeRange']['Low']
         pobj['agemax'] = faceDetail['AgeRange']['High']
         pobj['Gender'] = faceDetail['Gender']['Value']
+        
+        eobj = []
+        for emotion in faceDetail['Emotions']:
+            if int(emotion['Confidence']) >= 50:
+                eobj.append(emotion['Type'])
+        pobj['Emotions'] = eobj
         data['people'].append(pobj)
-    #print(data)
-
+   
 data = {"labels": [],
         "people": []
     }
@@ -39,5 +47,7 @@ while True:
 
 detect_labels(photo, 'intheloop')
 detect_faces(photo, 'intheloop')
-print(data)
 
+final_output = format_json(data)
+
+print(final_output)
