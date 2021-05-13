@@ -1,6 +1,10 @@
 import json
 import boto3
 
+data = {"labels": [],
+        "people": []
+    }
+
 def format_json(data):
   json_data = json.dumps(data)
   return json_data
@@ -33,14 +37,13 @@ def detect_faces(photo, bucket):
                 eobj.append(emotion['Type'])
         pobj['Emotions'] = eobj
         data['people'].append(pobj)
-   
-data = {"labels": [],
-        "people": []
-    }
 
-detect_labels(photo, 'intheloop')
-detect_faces(photo, 'intheloop')
 
-final_output = format_json(data)
 
-print(final_output)
+def lambda_handler(event, context):
+    print("event", event)
+    detect_labels(event['Records'][0]['s3']['object']['key'], 'intheloop') 
+    detect_faces(event['Records'][0]['s3']['object']['key'], 'intheloop')
+    final_output = format_json(data)
+    print(final_output)
+    return final_output
