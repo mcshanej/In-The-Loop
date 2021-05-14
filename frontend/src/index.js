@@ -1,38 +1,17 @@
-import React, { useState } from "react";
-import { render } from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-const EncodeBase64 = () => {
-  const [selectetdFile, setSelectedFile] = useState([]);
-  const [fileBase64String, setFileBase64String] = useState("");
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root'),
+);
 
-  const onFileChange = (e) => {
-    setSelectedFile(e.target.files);
-  };
-
-  const encodeFileBase64 = (file) => {
-    var reader = new FileReader();
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        var Base64 = reader.result;
-        var index = Base64.indexOf(',');
-        Base64 = Base64.slice(index+1);
-        setFileBase64String(Base64);
-      };
-      reader.onerror = (error) => {
-        console.log("error: ", error);
-      };
-    }
-  };
-
-  encodeFileBase64(selectetdFile[0]);
-  console.log(fileBase64String);
-
-  return (
-    <div>
-      <input type="file" id="input" onChange={onFileChange} />
-    </div>
-  );
-};
-
-render(<EncodeBase64 />, document.querySelector("#root"));
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
