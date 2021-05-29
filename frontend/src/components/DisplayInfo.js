@@ -1,24 +1,32 @@
-import React,{ useState, useEffect } from "react";
+import React,{ useState} from "react";
 
 export default function  DisplayInfo(){
-      const [information, setInfo] = useState([]);
-      const [otherInfo, setOther] = useState([]);
+  const [information, setInfo] = useState([]);
+  const [otherInfo, setOther] = useState([]);
 
-  useEffect(() => {
+ 
+  function setInfoDisplay(){
+     // Simple POST request with a JSON body using fetch
+      // const requestOptions = {
+      //   method: 'POST',
+      //   headers: { 'string': props.base64String },
+      // };
+      // console.log(`this is requestOptions ${requestOptions.headers}`);
     fetch("/api/information")
       .then(res => res.json())
       .then(json => {
         setInfo(json.labels)
         setOther(json.people)
       })
-  }, [])
+  }
+
   
-  console.log(information);
-  console.log(otherInfo);
+  // console.log(information);
+  // console.log(otherInfo);
     // console.log(information[0]);
     return(
         <>
-        
+        <button onClick={setInfoDisplay}>Upload</button> 
           {information.map((information)=>(
              <div> 
             <div>{information.confidence}</div>
@@ -33,6 +41,7 @@ export default function  DisplayInfo(){
             <div>{otherInfo.Emotions}</div>
             </div>
            )) }
+
           
         </>
     )
