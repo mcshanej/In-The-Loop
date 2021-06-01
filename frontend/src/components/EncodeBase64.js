@@ -1,41 +1,38 @@
-import React, { useState} from "react";
-import DecodeBase64 from './DecodeBase64';
-import Display from './DisplayInfo';
-import { FaImage } from "react-icons/fa";
+import React, {useState} from 'react';
+import DisplayInfo from './DisplayInfo';
 
 export default function  EncodeBase64(){
-    const [selectetdFile, setSelectedFile] = useState([]);
-    const [fileBase64String, setFileBase64String] = useState("");
-
+  const [fileInfo, setFileInfo] = useState([]);
+ 
   const onFileChange = (e) => {
-    setSelectedFile(e.target.files);
-  };
+    //is an array
+    let file = e.target.files;
+    let selectedFile = file[0];
+    let name = selectedFile.name;
+    let tempArr =[];
 
-  const encodeFileBase64 = (file) => {
+    tempArr.push(name);
+
     var reader = new FileReader();
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        var Base64 = reader.result;
-        var index = Base64.indexOf(',');
-        Base64 = Base64.slice(index+1);
-        setFileBase64String(Base64);
-       
-      };
+      if (selectedFile) {
+        reader.readAsDataURL(selectedFile);
+        reader.onload = () => {
+          var Base64 = reader.result;
+          var index = Base64.indexOf(',');
+          Base64 = Base64.slice(index+1);
+          tempArr.push(Base64);
+        };
       reader.onerror = (error) => {
         console.log("error: ", error);
       };
-    }
-  };
-
-  encodeFileBase64(selectetdFile[0]);
-    // console.log(fileBase64String);
+      };
+    setFileInfo(tempArr);
+  }
   
   return (
     <div>
-      {fileBase64String !== "" ? <DecodeBase64 base64={fileBase64String}/> : <div> <FaImage size={100} color="purple" /> <p>No Image selected</p></div>}
       <input type="file" id="input" onChange={onFileChange} />
-     <Display base64String={fileBase64String}/>
+      <DisplayInfo value={fileInfo} />
     </div>
   );
 };
