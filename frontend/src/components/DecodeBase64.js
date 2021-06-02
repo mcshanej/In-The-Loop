@@ -1,7 +1,6 @@
 import React from "react";
 import './DecodeBase64.css';
 
-
 export default function  DecodeBase64(props){
     
     return(

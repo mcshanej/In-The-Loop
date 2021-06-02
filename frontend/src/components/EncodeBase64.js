@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import DisplayInfo from './DisplayInfo';
+import './EncodeBase64.css';
 
 export default function  EncodeBase64(){
   const [fileInfo, setFileInfo] = useState([]);
@@ -30,7 +31,7 @@ export default function  EncodeBase64(){
   }
   
   return (
-    <div>
+    <div className='base64Container'>
       <input type="file" id="input" onChange={onFileChange} />
       <DisplayInfo value={fileInfo} />
     </div>
