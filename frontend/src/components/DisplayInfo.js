@@ -1,11 +1,12 @@
-import React,{ useState, Component} from "react";
+import React,{useState} from "react";
 import DecodeBase64 from './DecodeBase64';
-import Table from 'react-bootstrap/Table';
+import './DisplayInfo.css';
 
 export default function DisplayInfo(props){
   const [information, setInfo] = useState([]);
   const [otherInfo, setOther] = useState([]);
 
+  console.log(props);
   console.log(`this is infromation at inital state: ${JSON.stringify(information)}`);
   console.log(`this is otherInfo at inital state: ${JSON.stringify(otherInfo)}`);
 
@@ -37,52 +38,54 @@ export default function DisplayInfo(props){
 
     return(
       <>
-        <button onClick={setInfoDisplay}>Upload</button> 
+        <button onClick={setInfoDisplay}>Upload File</button> 
         <br/>
         <br/>
-        <div className='displayInfo container'>
-          <DecodeBase64 base64={props.value[1]}/> 
-          {/* <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">Name</th>
-                <th scope="col">Confidence Percentage</th>
-              </tr>
-            </thead>
-              {information.map((information)=>(
-                <tbody>
+        <div className='displayInfoContainer'>
+          {props.value[1] === undefined ? <p></p>:<DecodeBase64 base64={props.value[1]}/>} 
+          {information !== [] ?
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Confidence Percentage</th>
+                </tr>
+              </thead>
+            {information.map((information)=>(
+              <tbody>
                 <tr>
                   <th scope="row"></th>
                   <td>{information.name}</td>
                   <td>{Math.floor(information.confidence)}%</td>
                 </tr>
-                 </tbody>
-            ))}
-          </Table>
-          <Table striped bordered hover size="sm">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Age Min</th>
-                <th scope="col">Age Max</th>
-                <th scope="col">Emotions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {otherInfo.map((otherInfo)=>(
+              </tbody>
+              ))}
+          </table>:<p></p>}
+          {otherInfo !== [] ?
+            <table >
+              <thead>
                 <tr>
-                  <th scope="row">1</th>
-                  <td>{otherInfo.agemin}</td>
-                  <td>{otherInfo.agemax}</td>
-                  <td>{otherInfo.Gender}</td>
-                  <td>{otherInfo.Emotions}</td>
+                  <th scope="col">#</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Age Min</th>
+                  <th scope="col">Age Max</th>
+                  <th scope="col">Emotions</th>
                 </tr>
-            ))}
-            </tbody>
-          </Table> */}
-            {information.map((information)=>(
+              </thead>
+              <tbody>
+                {otherInfo.map((otherInfo)=>(
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>{otherInfo.agemin}</td>
+                    <td>{otherInfo.agemax}</td>
+                    <td>{otherInfo.Gender}</td>
+                    <td>{otherInfo.Emotions}</td>
+                  </tr>
+                ))}
+              </tbody>
+          </table> :<p></p>}
+            {/* {information.map((information)=>(
               <div> 
               <div>{Math.floor(information.confidence)}%</div>
               <div>{information.name}</div>
@@ -95,7 +98,7 @@ export default function DisplayInfo(props){
               <div>{otherInfo.Gender}</div>
               <div>{otherInfo.Emotions}</div>
               </div>
-            ))}
+            ))} */}
         </div>
         </>
     
