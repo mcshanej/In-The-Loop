@@ -38,12 +38,14 @@ def detect_faces(photo, bucket):
         pobj['Emotions'] = eobj
         data['people'].append(pobj)
 
-
-
 def lambda_handler(event, context):
     print("event", event)
     detect_labels(event['Records'][0]['s3']['object']['key'], 'intheloop') 
     detect_faces(event['Records'][0]['s3']['object']['key'], 'intheloop')
     final_output = format_json(data)
     print(final_output)
+    global data = {
+        "labels": [],
+        "people": []
+    }
     return final_output

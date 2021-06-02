@@ -3,14 +3,11 @@
   margin: 0 auto;
   display: block;
   width: 50%;
-  border: 3px solid green;
   padding: 10px;
-  /* text-align: center;
-  margin: 0 auto;
-  display: block; */
+  font-family: "Roboto", sans-serif;
 }
 body {
-  background-color: #fff8d9;
+  background-color: #fcfaeb;
 }
 .logo {
   width: 15vw;
@@ -18,15 +15,4 @@ body {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  /* text-align: center; */
 }
-/* .App-header {
-  background-color: #fcfaeb;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-} */
