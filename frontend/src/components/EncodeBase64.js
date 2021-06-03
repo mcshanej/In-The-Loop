@@ -33,8 +33,8 @@ export default function  EncodeBase64(){
   return (
     <div className='base64Container'>
       <label className="custom-file-upload">
-      <input type="file" id="input" onChange={onFileChange} />
-      Select File
+        <input type="file" id="input" onChange={onFileChange} />
+        Select File
       </label>
       <DisplayInfo value={fileInfo} />
     </div>
